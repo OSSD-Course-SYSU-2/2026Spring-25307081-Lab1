@@ -126,11 +126,16 @@ export class SnakeGame {
         break;
     }
     
-    // 边界检测
-    if (head.x < 0 || head.x >= this.gridWidth || 
-        head.y < 0 || head.y >= this.gridHeight) {
-      this.gameOver = true;
-      return true;
+    // 边界穿越处理（蛇从相反边界出现）
+    if (head.x < 0) {
+      head.x = this.gridWidth - 1;
+    } else if (head.x >= this.gridWidth) {
+      head.x = 0;
+    }
+    if (head.y < 0) {
+      head.y = this.gridHeight - 1;
+    } else if (head.y >= this.gridHeight) {
+      head.y = 0;
     }
     
     // 自身碰撞检测

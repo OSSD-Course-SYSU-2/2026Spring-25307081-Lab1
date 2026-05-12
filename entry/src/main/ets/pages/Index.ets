@@ -118,10 +118,16 @@ struct Index {
         break;
     }
 
-    // 边界碰撞检测
-    if (head.x < 0 || head.x >= GAME_WIDTH || head.y < 0 || head.y >= GAME_HEIGHT) {
-      this.gameOver();
-      return;
+    // 边界穿越处理（蛇从相反边界出现）
+    if (head.x < 0) {
+      head.x = GAME_WIDTH - 1;
+    } else if (head.x >= GAME_WIDTH) {
+      head.x = 0;
+    }
+    if (head.y < 0) {
+      head.y = GAME_HEIGHT - 1;
+    } else if (head.y >= GAME_HEIGHT) {
+      head.y = 0;
     }
 
     // 自身碰撞检测

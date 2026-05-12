@@ -152,20 +152,16 @@ export class GameWorker {
               break;
           }
           
-          // 边界检测
-          if (head.x < 0 || head.x >= gameLogic.gridWidth || 
-              head.y < 0 || head.y >= gameLogic.gridHeight) {
-            gameLogic.gameOver = true;
-            self.postMessage({
-              type: 'gameUpdate',
-              payload: {
-                snake: [...gameLogic.snake],
-                food: { ...gameLogic.food },
-                score: gameLogic.score,
-                gameOver: true
-              }
-            });
-            return;
+          // 边界穿越处理（蛇从相反边界出现）
+          if (head.x < 0) {
+            head.x = gameLogic.gridWidth - 1;
+          } else if (head.x >= gameLogic.gridWidth) {
+            head.x = 0;
+          }
+          if (head.y < 0) {
+            head.y = gameLogic.gridHeight - 1;
+          } else if (head.y >= gameLogic.gridHeight) {
+            head.y = 0;
           }
           
           // 自身碰撞检测
